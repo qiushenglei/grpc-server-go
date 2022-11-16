@@ -1,7 +1,9 @@
 syntax="proto3";
 
 // package  proto文件的包名(与go无关)  生成的语言类放在什么包里面  这个package必须紧跟着syntax="proto3"
-package pdfiles.user;
+package pbfiles.user;
+
+import "google/api/annotations.proto";
 
 // 定义生成的pb文件go的package名
 option go_package = "/proto";
@@ -10,11 +12,17 @@ option go_package = "/proto";
 // 定义service服务 会翻译为UserServiceClient 和 userServiceClient 和对外暴露的 NewUserServiceClient供客户端调用
 // 对外暴露GetUserList 和 GetUser方法
 // 定义服务
-service UserSerivce{
+service UserService{
   //定义获取用户列表信息方法
   rpc GetUserList(UserRequest) returns (UserListReply) {}
   // 定义获取用户信息方法
-  rpc GetUser(UserRequest) returns (UserReply) {}
+  rpc GetUser(UserRequest) returns (UserReply) {
+    option (google.api.http) = {
+      get: "/helloworld/{name}"
+    };
+  }
+  // http
+
 }
 
 // 入参

@@ -18,126 +18,126 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UserSerivceClient is the client API for UserSerivce service.
+// UserServiceClient is the client API for UserService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UserSerivceClient interface {
+type UserServiceClient interface {
 	// 定义获取用户列表信息方法
 	GetUserList(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserListReply, error)
 	// 定义获取用户信息方法
 	GetUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserReply, error)
 }
 
-type userSerivceClient struct {
+type userServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUserSerivceClient(cc grpc.ClientConnInterface) UserSerivceClient {
-	return &userSerivceClient{cc}
+func NewUserServiceClient(cc grpc.ClientConnInterface) UserServiceClient {
+	return &userServiceClient{cc}
 }
 
-func (c *userSerivceClient) GetUserList(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserListReply, error) {
+func (c *userServiceClient) GetUserList(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserListReply, error) {
 	out := new(UserListReply)
-	err := c.cc.Invoke(ctx, "/pdfiles.user.UserSerivce/GetUserList", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pbfiles.user.UserService/GetUserList", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *userSerivceClient) GetUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserReply, error) {
+func (c *userServiceClient) GetUser(ctx context.Context, in *UserRequest, opts ...grpc.CallOption) (*UserReply, error) {
 	out := new(UserReply)
-	err := c.cc.Invoke(ctx, "/pdfiles.user.UserSerivce/GetUser", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pbfiles.user.UserService/GetUser", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UserSerivceServer is the server API for UserSerivce service.
-// All implementations must embed UnimplementedUserSerivceServer
+// UserServiceServer is the server API for UserService service.
+// All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
-type UserSerivceServer interface {
+type UserServiceServer interface {
 	// 定义获取用户列表信息方法
 	GetUserList(context.Context, *UserRequest) (*UserListReply, error)
 	// 定义获取用户信息方法
 	GetUser(context.Context, *UserRequest) (*UserReply, error)
-	mustEmbedUnimplementedUserSerivceServer()
+	mustEmbedUnimplementedUserServiceServer()
 }
 
-// UnimplementedUserSerivceServer must be embedded to have forward compatible implementations.
-type UnimplementedUserSerivceServer struct {
+// UnimplementedUserServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedUserServiceServer struct {
 }
 
-func (UnimplementedUserSerivceServer) GetUserList(context.Context, *UserRequest) (*UserListReply, error) {
+func (UnimplementedUserServiceServer) GetUserList(context.Context, *UserRequest) (*UserListReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUserList not implemented")
 }
-func (UnimplementedUserSerivceServer) GetUser(context.Context, *UserRequest) (*UserReply, error) {
+func (UnimplementedUserServiceServer) GetUser(context.Context, *UserRequest) (*UserReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
-func (UnimplementedUserSerivceServer) mustEmbedUnimplementedUserSerivceServer() {}
+func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
-// UnsafeUserSerivceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UserSerivceServer will
+// UnsafeUserServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UserServiceServer will
 // result in compilation errors.
-type UnsafeUserSerivceServer interface {
-	mustEmbedUnimplementedUserSerivceServer()
+type UnsafeUserServiceServer interface {
+	mustEmbedUnimplementedUserServiceServer()
 }
 
-func RegisterUserSerivceServer(s grpc.ServiceRegistrar, srv UserSerivceServer) {
-	s.RegisterService(&UserSerivce_ServiceDesc, srv)
+func RegisterUserServiceServer(s grpc.ServiceRegistrar, srv UserServiceServer) {
+	s.RegisterService(&UserService_ServiceDesc, srv)
 }
 
-func _UserSerivce_GetUserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserService_GetUserList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserSerivceServer).GetUserList(ctx, in)
+		return srv.(UserServiceServer).GetUserList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pdfiles.user.UserSerivce/GetUserList",
+		FullMethod: "/pbfiles.user.UserService/GetUserList",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserSerivceServer).GetUserList(ctx, req.(*UserRequest))
+		return srv.(UserServiceServer).GetUserList(ctx, req.(*UserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UserSerivce_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UserService_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UserSerivceServer).GetUser(ctx, in)
+		return srv.(UserServiceServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pdfiles.user.UserSerivce/GetUser",
+		FullMethod: "/pbfiles.user.UserService/GetUser",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UserSerivceServer).GetUser(ctx, req.(*UserRequest))
+		return srv.(UserServiceServer).GetUser(ctx, req.(*UserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// UserSerivce_ServiceDesc is the grpc.ServiceDesc for UserSerivce service.
+// UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UserSerivce_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pdfiles.user.UserSerivce",
-	HandlerType: (*UserSerivceServer)(nil),
+var UserService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pbfiles.user.UserService",
+	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetUserList",
-			Handler:    _UserSerivce_GetUserList_Handler,
+			Handler:    _UserService_GetUserList_Handler,
 		},
 		{
 			MethodName: "GetUser",
-			Handler:    _UserSerivce_GetUser_Handler,
+			Handler:    _UserService_GetUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

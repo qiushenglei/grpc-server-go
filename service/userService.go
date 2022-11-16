@@ -2,11 +2,11 @@ package service
 
 import (
 	"context"
-	"etcd_new/models"
-	"etcd_new/proto"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql" //不能忘记导入
 	"github.com/go-xorm/xorm"
+	"github.com/qiushenglei/grpc-server-go/models"
+	"github.com/qiushenglei/grpc-server-go/proto"
 	"xorm.io/core"
 )
 
@@ -15,7 +15,7 @@ type UserService struct {
 	// 业务侧是查询sql，所以提前注册到rpc服务内
 	Engine *xorm.Engine
 	// grpc规范必须要引入，否则我无法实现这个接口，因为她有个must小写方法
-	proto.UnimplementedUserSerivceServer
+	proto.UnimplementedUserServiceServer
 }
 
 // 数据库操作引擎
